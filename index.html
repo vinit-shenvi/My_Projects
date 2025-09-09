@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vinit Vithalrai Shenvi - Cosmic Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --gemini-gradient: linear-gradient(90deg, #48cae4, #00b4d8, #0077b6, #023e8a, #03045e);
+            --bg-color: #0d1117;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: #e5e5e5;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+        }
+
+        /* Starfield effect using multiple box shadows */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .star-layer-1 {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            box-shadow: 100px 200px #fff, 200px 300px #fff, 150px 100px #fff, 300px 250px #fff, 50px 50px #fff, 250px 100px #fff, 180px 320px #fff, 400px 150px #fff;
+            animation: zoom-in 1s infinite;
+        }
+
+        .star-layer-2 {
+            width: 2px;
+            height: 2px;
+            background: transparent;
+            box-shadow: 100px 200px #ccc, 200px 300px #ccc, 150px 100px #ccc, 300px 250px #ccc, 50px 50px #ccc, 250px 100px #ccc, 180px 320px #ccc, 400px 150px #ccc;
+            animation: zoom-in 2s infinite;
+        }
+
+        @keyframes zoom-in {
+            0% { transform: scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        /* Responsive Navigation */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 75%;
+            max-width: 300px;
+            height: 100%;
+            background-color: var(--bg-color);
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 100;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        /* Glassy card effect with animated border */
+        .card {
+            background-color: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 1rem;
+            padding: 2px;
+            background: var(--gemini-gradient);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: 10;
+            animation: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .card:hover::before {
+            opacity: 1;
+            animation: border-spin 2s linear infinite;
+        }
+        @keyframes border-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .highlight {
+            color: #48cae4;
+            font-weight: 700;
+        }
+
+        /* Parallax effect on sections */
+        .section-container {
+            position: relative;
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Starfield Background -->
+    <div class="stars">
+        <div class="star-layer-1"></div>
+        <div class="star-layer-2"></div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header class="bg-indigo-900 bg-opacity-40 shadow-lg py-6 sticky top-0 z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm3.84 14.54a5 5 0 0 1-7.68 0l-.13-.23a4.98 4.98 0 0 1 7.94-.13zM12 18a6 6 0 1 1 6-6 6 6 0 0 1-6 6z"/>
+                    <path d="M12 9a3 3 0 1 1-3 3 3 3 0 0 1 3-3m0 2a1 1 0 1 0 1 1 1 1 0 0 0-1-1z"/>
+                </svg>
+                <span class="text-xl font-bold text-white hidden sm:block">Vinit Shenvi</span>
+            </div>
+            <nav class="hidden md:block">
+                <a href="#about" class="text-white hover:text-cyan-400 mx-2 md:mx-4 transition duration-300">About</a>
+                <a href="#experience" class="text-white hover:text-cyan-400 mx-2 md:mx-4 transition duration-300">Experience</a>
+                <a href="#projects" class="text-white hover:text-cyan-400 mx-2 md:mx-4 transition duration-300">Projects</a>
+                <a href="#skills" class="text-white hover:text-cyan-400 mx-2 md:mx-4 transition duration-300">Skills</a>
+                <a href="#education" class="text-white hover:text-cyan-400 mx-2 md:mx-4 transition duration-300">Education</a>
+            </nav>
+            <button id="menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Sidebar Menu -->
+    <div id="sidebar" class="sidebar">
+        <button id="close-button" class="self-end mb-8 text-white focus:outline-none">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <nav class="flex flex-col space-y-6">
+                <a href="#about" class="text-white hover:text-cyan-400 transition duration-300 text-2xl nav-link">About</a>
+                <a href="#experience" class="text-white hover:text-cyan-400 transition duration-300 text-2xl nav-link">Experience</a>
+                <a href="#projects" class="text-white hover:text-cyan-400 transition duration-300 text-2xl nav-link">Projects</a>
+                <a href="#skills" class="text-white hover:text-cyan-400 transition duration-300 text-2xl nav-link">Skills</a>
+                <a href="#education" class="text-white hover:text-cyan-400 transition duration-300 text-2xl nav-link">Education</a>
+            </nav>
+        </div>
+
+    <!-- Main Content Sections -->
+    <main class="space-y-24 py-16 px-4">
+
+        <section id="about" class="section-container flex justify-center py-24">
+            <div class="card w-full max-w-4xl text-center md:text-left">
+                <h2 class="text-5xl font-bold mb-4 text-white">Vinit Vithalrai Shenvi</h2>
+                <p class="text-lg leading-relaxed text-gray-300">
+                    A knowledge-driven catalyst, quick to absorb and quicker to amplify insights into meaningful, high-impact results. Serving as a Strategic Planner and Project Manager at <span class="highlight">Tata Electronics</span>, I lead cross-functional initiatives from vision to execution, focusing on the digitalization of the industry and preparing it for future advancements.
+                </p>
+                <div class="mt-6 flex flex-wrap justify-center md:justify-start gap-4 text-gray-400 text-sm">
+                    <span>+91 9606634643</span>
+                    <span>shenvi02@gmail.com</span>
+                    <span>linkedin.com/in/vinit-shenvi</span>
+                    <span>github.com/vinit-shenvi</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="section-container flex justify-center py-24">
+            <div class="card w-full max-w-4xl">
+                <h2 class="text-4xl font-bold text-center mb-12 text-white">Professional Experience</h2>
+                <div class="space-y-8">
+                    <div class="experience-card">
+                        <h3 class="text-2xl font-semibold text-cyan-400">Category Manager II</h3>
+                        <p class="text-gray-300">Native - Urban Company | <span class="highlight">July 2025 - Present</span></p>
+                        <p class="text-gray-400 text-sm mt-2">Business & Strategy</p>
+                        <ul class="list-disc list-inside mt-4 text-gray-400 space-y-2">
+                            <li>Led next-gen product development as Tech Lead, from ideation to market launch.</li>
+                            <li>Oversaw end-to-end supply chain operations for Native Products across India, UAE, Singapore, and Saudi Arabia.</li>
+                            <li>Spearheaded the design and development of a cost-efficient, high-performance Smart Lock, decreasing customer contact rate from <span class="highlight">5.5% to 2.3%</span>.</li>
+                            <li>Reduced product defect rate to below <span class="highlight">1.5%</span> and production costs by <span class="highlight">23.3%</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="section-container flex justify-center py-24">
+            <div class="card w-full max-w-4xl">
+                <h2 class="text-4xl font-bold text-center mb-12 text-white">My Projects</h2>
+                <div class="space-y-8">
+                    <div class="project-card">
+                        <h3 class="text-2xl font-semibold text-cyan-400 mb-2">Pulse Jet Engine</h3>
+                        <p class="text-gray-300 mb-4">Patent Owned - 2024</p>
+                        <ul class="list-disc list-inside mt-4 text-gray-400 space-y-2">
+                            <li>Designed, simulated, and tested a miniaturized pulse jet engine for UAVs, achieving <span class="highlight">10 ml fuel consumption for 1N of thrust</span>.</li>
+                            <li>Developed a website for real-time monitoring and analysis of engine performance.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="section-container flex justify-center py-24">
+            <div class="card w-full max-w-4xl">
+                <h2 class="text-4xl font-bold text-center mb-12 text-white">Skills & Achievements</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="skills-card">
+                        <h3 class="text-2xl font-semibold text-cyan-400 mb-4">Technical Skills</h3>
+                        <div class="flex flex-col gap-4">
+                            <div>
+                                <p class="font-semibold text-gray-300">Mechanical:</p>
+                                <span class="text-gray-400 text-sm">Solidworks, AutoCAD, Fusion 360, Ansys, Comsol Multiphysics, Creo (Pro E), Siemens NX</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-300">Computer:</p>
+                                <span class="text-gray-400 text-sm">AWS, Big Query, Machine Learning, Computer Vision, .Net, Unity, SQL</span>
+                            </div>
+                            <div>
+                                <p class="font-semibold text-gray-300">Languages:</p>
+                                <span class="text-gray-400 text-sm">Python, C#, C++, C, R, HTML, Swift, Flutter, CSS, JS</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section-container flex justify-center py-24">
+            <div class="card w-full max-w-4xl">
+                <h2 class="text-4xl font-bold text-center mb-12 text-white">Education</h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="education-card">
+                        <h3 class="text-2xl font-semibold text-cyan-400">Bachelor of Engineering (Dual Degree)</h3>
+                        <p class="text-gray-300">MS Ramaiah Institute of Technology</p>
+                        <p class="text-gray-400 text-sm mt-2">Dec 2020 - June 2024 | <span class="highlight">GPA-8.72</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="text-center py-8 text-gray-400 text-sm">
+        <h3 class="text-xl font-semibold text-white mb-4">Connect with me</h3>
+        <div class="flex justify-center space-x-6 mb-4">
+            <a href="https://github.com/vinit-shenvi" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.809 1.309 3.492 1.001.107-.775.435-1.309.792-1.619-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.001-.404 1.017.005 2.04.138 3.003.404 2.292-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.091 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/vinit-shenvi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M22.23 0H1.77C.79 0 0 .78 0 1.75v20.5C0 23.22.79 24 1.77 24h20.46c.98 0 1.77-.78 1.77-1.75v-20.5C24 .78 23.21 0 22.23 0zM7.08 20.4h-3.47V9.06h3.47V20.4zM5.35 7.64c-1.14 0-2.07-.94-2.07-2.09 0-1.15.93-2.09 2.07-2.09 1.14 0 2.07.94 2.07 2.09 0 1.15-.93 2.09-2.07 2.09zM20.4 20.4h-3.46v-5.63c0-1.35-.48-2.27-1.69-2.27-1.23 0-1.97.83-2.3 1.64-.12.29-.15.68-.15 1.08v5.18H9.37s.05-9.98 0-11.02h3.47v1.5c.47-.73 1.28-1.78 3.12-1.78 2.27 0 3.97 1.48 3.97 4.67v6.62z"/>
+                </svg>
+            </a>
+            <a href="mailto:shenvi02@gmail.com" aria-label="Gmail">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M12 12.713l-11.758-11.724v22.233l11.758 11.724 11.758-11.724v-22.233l-11.758 11.724zM12 14.15l-10.456-10.415 10.456-10.415 10.456 10.415-10.456 10.415z"/>
+                </svg>
+            </a>
+            <a href="https://wa.me/919606634643" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M12.03 2.5c-5.26 0-9.52 4.26-9.52 9.52 0 1.93.58 3.73 1.58 5.24l-1.63 4.41 4.54-1.63c1.47.8 3.1 1.24 4.93 1.24h.02c5.25 0 9.51-4.26 9.51-9.51s-4.25-9.5-9.5-9.5zm0 17.5c-1.5 0-2.92-.4-4.14-1.13l-.29-.17-3.05 1.1.88-3.15-.19-.3c-.8-.94-1.27-2.14-1.27-3.41 0-3.95 3.2-7.15 7.15-7.15 1.93 0 3.73.75 5.09 2.11 1.36 1.36 2.11 3.16 2.11 5.09s-1.25 4.98-2.11 5.84l-.1.09c-.94.9-2.14 1.4-3.41 1.4zm5.1-6.85c-.28-.14-.7-.35-.98-.48-.28-.14-.5-.14-.72.14-.22.28-.56.67-.68.81-.13.14-.26.16-.49.07s-.9-.33-1.7-1.04c-1.26-1.12-2.1-2.5-2.35-2.92-.25-.41-.03-.64.1-.78.1-.14.22-.27.35-.41.13-.14.18-.24.28-.42.1-.19.05-.35-.02-.48s-.68-1.63-.94-2.22c-.25-.57-.5-.48-.68-.48-.19 0-.41-.03-.59-.03-.22 0-.58.05-.88.35-.29.29-1.1.92-1.1 2.25 0 1.33 1.13 2.6 1.29 2.8s2.21 3.55 5.37 4.87c.78.33 1.4.52 1.88.67.75.24 1.44.2 1.98.13.59-.08 1.8-.73 2.05-1.48.25-.75.25-1.39.18-1.5.01-.01-.02-.01-.03-.01z"/>
+                </svg>
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M24 12c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-2.731v-3.46h2.731v-2.133c0-2.712 1.652-4.218 4.168-4.218 1.185 0 2.383.211 2.383.211v2.611h-1.332c-1.319 0-1.758.818-1.758 1.656v1.93h2.934l-.474 3.46h-2.46v8.385c5.737-.9 10.125-5.864 10.125-11.854z"/>
+                </svg>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg class="social-icon w-8 h-8" viewBox="0 0 24 24">
+                    <path d="M12 0c-3.216 0-3.601.014-4.885.069-1.272.055-2.148.22-2.909.524-.76.304-1.449.82-2.106 1.478-.658.657-1.173 1.346-1.478 2.106-.304.761-.47 1.637-.525 2.91-.054 1.284-.069 1.668-.069 4.884s.014 3.601.069 4.885c.055 1.272.22 2.148.525 2.909.304.76.819 1.449 1.478 2.106.657.658 1.346 1.173 2.106 1.478.761.304 1.637.47 2.91.525 1.284.054 1.668.069 4.884.069s3.601-.014 4.885-.069c1.272-.055 2.148-.22 2.909-.525.76-.304 1.449-.819 2.106-1.478.658-.657 1.173-1.346 1.478-2.106.304-.761.47-1.637.525-2.91.054-1.284.069-1.668.069-4.884s-.014-3.601-.069-4.885c-.055-1.272-.22-2.148-.525-2.909-.304-.76-.819-1.449-1.478-2.106-.657-.658-1.346-1.173-2.106-1.478-.761-.304-1.637-.47-2.91-.525-1.284-.054-1.668-.069-4.884-.069zm0 1.8c3.21-.001 3.585.012 4.862.066 1.192.051 1.776.21 2.228.397.464.195.845.424 1.22.8.375.374.604.756.8.1.2.452.346 1.036.397 2.228.054 1.277.066 1.652.066 4.862s-.012 3.585-.066 4.862c-.051 1.192-.21 1.776-.397 2.228-.195.464-.424.845-.8 1.22-.374.375-.756.604-1.22.8-.452.2-1.036.346-2.228.397-1.277.054-1.652.066-4.862.066s-3.585-.012-4.862-.066c-1.192-.051-1.776-.21-2.228-.397-.464-.195-.845-.424-1.22-.8-.374-.375-.604-.756-.8-1.22-.2-.452-.346-1.036-.397-2.228-.054-1.277-.066-1.652-.066-4.862s.012-3.585.066-4.862c.051-1.192.21-1.776.397-2.228.195-.464.424-.845.8-1.22.375-.374.756-.604 1.22-.8.452-.2 1.036-.346 2.228-.397 1.277-.054 1.652-.066 4.862-.066zm0 3.6c-4.418 0-8 3.582-8 8s3.582 8 8 8 8-3.582 8-8-3.582-8-8-8zm0 1.8c3.418 0 6.2 2.782 6.2 6.2s-2.782 6.2-6.2 6.2-6.2-2.782-6.2-6.2 2.782-6.2 6.2-6.2zm4.84-2.81c0 .798-.646 1.445-1.445 1.445-.798 0-1.445-.647-1.445-1.445s.647-1.445 1.445-1.445c.799 0 1.445.647 1.445 1.445z"/>
+                </svg>
+            </a>
+        </div>
+        <p>Built with ❤️ and a little cosmic magic.</p>
+    </footer>
+
+    <script>
+        // GSAP for entrance animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.card').forEach(card => {
+            gsap.fromTo(card, {
+                opacity: 0,
+                y: 50
+            }, {
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Mobile sidebar functionality
+        const menuButton = document.getElementById('menu-button');
+        const closeButton = document.getElementById('close-button');
+        const sidebar = document.getElementById('sidebar');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        menuButton.addEventListener('click', () => {
+            sidebar.classList.add('open');
+        });
+        
+        closeButton.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html>
